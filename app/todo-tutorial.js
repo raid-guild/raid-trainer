@@ -92,11 +92,11 @@ export default function TodoTutorial() {
         <header className="hero">
           <div className="hero-copy">
             <p className="eyebrow">Raid Guild x Pinata</p>
-            <h1>Todo tutorial with a real API and a local SQLite file.</h1>
+            <h1>Starter-builder for small hosted agent apps.</h1>
             <p className="lede">
-              This starter shows the basic full-stack path: a Next.js page, App Router API
-              endpoints, a persistent SQLite database in the workspace, and an image served
-              back through the app.
+              This template already has the useful bones: a landing page, App Router API
+              endpoints, a persistent SQLite database in the workspace, and a pattern for
+              serving local assets back through the app.
             </p>
             <div className="meta-row">
               <span>UI: <code>/app</code></span>
@@ -118,9 +118,25 @@ export default function TodoTutorial() {
 
         <section className="tutorial-grid">
           <article className="card">
-            <h2>Add a todo</h2>
+            <h2>Start with a focused app</h2>
             <p className="card-copy">
-              Create entries through the API. They persist to <code>workspace/data/todos.db</code>.
+              Good next versions for this stack are narrow and complete: a workout assistant,
+              kitchen aide, study coach, travel planner, creator studio helper, or household ops app.
+              The todo flow below is just the starter slice you can reshape first.
+            </p>
+            <ul className="route-list">
+              <li>A workout assistant can track routines, sessions, and streaks.</li>
+              <li>A kitchen aide can manage pantry items, meal ideas, and shopping lists.</li>
+              <li>A study coach can store topics, review prompts, and daily progress.</li>
+              <li>A creator helper can track ideas, drafts, assets, and publishing steps.</li>
+            </ul>
+          </article>
+
+          <article className="card">
+            <h2>Use the starter slice</h2>
+            <p className="card-copy">
+              Create entries through the API. They persist to <code>workspace/data/todos.db</code>
+              and demonstrate the simplest useful data loop in this template.
             </p>
             <form className="todo-form" onSubmit={submitTodo}>
               <label>
@@ -155,7 +171,7 @@ export default function TodoTutorial() {
           </article>
 
           <article className="card">
-            <h2>Try the routes</h2>
+            <h2>What is already wired</h2>
             <ul className="route-list">
               <li><code>GET /app/api/todos</code> returns the current list.</li>
               <li><code>POST /app/api/todos</code> creates a todo from JSON.</li>

@@ -36,6 +36,28 @@ It gives you:
 - `DELETE /app/api/todos/:id`
 - `GET /app/api/avatar`
 
+## First-run operator prompt
+
+Use something like this when you first open the agent:
+
+```text
+This is a starter for building small hosted agent apps. I want you to act like a practical builder, not a generic assistant.
+
+First, tell me what is already included in this template.
+Then give me 3 focused app directions that fit this stack well.
+For each direction, explain the landing page, the core API routes, and the persistent data model.
+Then recommend one as the best narrow v1 and start implementing it.
+```
+
+Good starter directions for this template include:
+
+- workout assistant
+- kitchen aide
+- study coach
+- travel planner
+- creator studio helper
+- household ops helper
+
 ## Local usage
 
 ```bash
