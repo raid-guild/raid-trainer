@@ -13,23 +13,6 @@
     "authorName": "Raid Guild",
     "tags": ["raidguild", "pinata", "agent", "fitness", "coach", "dashboard"]
   },
-  "secrets": [
-    {
-      "name": "APP_PASSWORD",
-      "description": "Lightweight dashboard password. Defaults to changeme if unset.",
-      "required": false
-    },
-    {
-      "name": "OPENCLAW_GATEWAY_TOKEN",
-      "description": "Bearer token for the protected OpenClaw gateway.",
-      "required": false
-    },
-    {
-      "name": "OPENCLAW_GATEWAY_URL",
-      "description": "Optional OpenClaw gateway base URL override.",
-      "required": false
-    }
-  ],
   "scripts": {
     "build": "npm install && npm run build",
     "start": "npm start"
