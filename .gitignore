@@ -18,3 +18,5 @@ pnpm-debug.log*
 .env.production.local
 
 .DS_Store
+workspace/data/*.db
+workspace/data/*.db-*

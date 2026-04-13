@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Raid Guild Agent Avatar</title>
+  <desc id="desc">A warm-toned shield avatar with a stylized eye and guild-inspired crest.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8f1e3"/>
+      <stop offset="100%" stop-color="#e5c39f"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#1d1b18"/>
+      <stop offset="100%" stop-color="#3e332a"/>
+    </linearGradient>
+    <linearGradient id="crest" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d46a32"/>
+      <stop offset="100%" stop-color="#a53d25"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="320" rx="64" fill="url(#bg)"/>
+  <circle cx="160" cy="160" r="124" fill="#efe2cf" stroke="#d7b999" stroke-width="4"/>
+  <path d="M160 66 230 96v66c0 56-39 99-70 117-31-18-70-61-70-117V96z" fill="url(#shield)"/>
+  <path d="M160 88 212 110v52c0 42-28 77-52 92-24-15-52-50-52-92v-52z" fill="#f7f1e7"/>
+  <path d="M160 121c27 0 51 13 65 33-14 20-38 33-65 33s-51-13-65-33c14-20 38-33 65-33z" fill="url(#crest)"/>
+  <ellipse cx="160" cy="154" rx="33" ry="21" fill="#f7f1e7"/>
+  <circle cx="160" cy="154" r="13" fill="#1d1b18"/>
+  <circle cx="165" cy="149" r="4" fill="#f7f1e7"/>
+  <path d="M124 212c21-15 44-22 69-22 24 0 47 7 68 22-11 18-24 32-39 42-20 14-40 20-62 20s-42-6-62-20c-15-10-28-24-39-42 21-15 44-22 65-22z" fill="url(#crest)"/>
+  <path d="M105 91 88 76m122 15 17-15" stroke="#a53d25" stroke-width="14" stroke-linecap="round"/>
+  <path d="M160 42v24" stroke="#a53d25" stroke-width="12" stroke-linecap="round"/>
+</svg>
