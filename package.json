@@ -6,6 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev --hostname 0.0.0.0 --port 3000",
+    "app:rebuild": "node scripts/rebuild-app.mjs",
     "start": "pm2-runtime start ecosystem.config.cjs",
     "start:web": "node server.js",
     "start:daemon": "pm2 start ecosystem.config.cjs",
@@ -14,10 +15,17 @@
     "pm2:logs": "pm2 logs full-stack-agent-starter --lines 100"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
     "better-sqlite3": "^12.4.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.8.0",
     "next": "^15.3.1",
     "pm2": "^6.0.8",
+    "postcss": "^8.5.9",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.2"
   }
 }

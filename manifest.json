@@ -2,18 +2,18 @@
   "$schema": "https://agents.pinata.cloud/schemas/manifest.v1.json",
   "version": 1,
   "agent": {
-    "name": "Full-Stack Agent Starter",
-    "description": "Full-stack starter for a Pinata-hosted agent with web UI, API routes, and persistence",
-    "emoji": "🤖",
-    "vibe": "Clear, practical, and easy to customize"
+    "name": "Coach Spike",
+    "description": "Chat-first personal trainer agent with a companion dashboard for progress, plan state, and adherence trends",
+    "emoji": "💪",
+    "vibe": "Sharp, playful, and practical"
   },
   "template": {
-    "slug": "full-stack-agent-starter",
-    "category": "general",
+    "slug": "coach-spike-dashboard",
+    "category": "health",
     "authorName": "Raid Guild",
-    "tags": ["raidguild", "starter", "pinata", "agent", "web"]
+    "tags": ["raidguild", "pinata", "agent", "fitness", "coach", "dashboard"]
   },
-  "secrets": [],
+  "secrets": ["APP_PASSWORD", "OPENCLAW_GATEWAY_TOKEN", "OPENCLAW_GATEWAY_URL"],
   "scripts": {
     "build": "npm install && npm run build",
     "start": "npm start"
