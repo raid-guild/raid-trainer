@@ -21,7 +21,8 @@
     },
     {
       "name": "OPENCLAW_GATEWAY_TOKEN",
-      "description": "Bearer token for the protected OpenClaw gateway."
+      "description": "Bearer token for the protected OpenClaw gateway.",
+      "required": false
     },
     {
       "name": "OPENCLAW_GATEWAY_URL",
