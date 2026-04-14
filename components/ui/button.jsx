@@ -7,10 +7,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[color:var(--primary)] text-[color:var(--primary-foreground)] hover:bg-[color:var(--primary-strong)]",
-        secondary:
-          "border border-[color:var(--border)] bg-[color:var(--panel)] text-[color:var(--foreground)] hover:bg-[color:var(--panel-strong)]",
-        ghost: "text-[color:var(--foreground)] hover:bg-[color:var(--panel)]"
+        default: "ui-btn-default",
+        secondary: "ui-btn-secondary border",
+        ghost: "ui-btn-ghost"
       },
       size: {
         default: "h-11 px-5",
@@ -25,10 +24,16 @@ const buttonVariants = cva(
   }
 );
 
-function Button({ className, variant, size, asChild = false, ...props }) {
+function Button({ className, variant, size, asChild = false, style, ...props }) {
   const Comp = asChild ? "span" : "button";
 
-  return <Comp className={cn(buttonVariants({ variant, size, className }))} {...props} />;
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      style={style}
+      {...props}
+    />
+  );
 }
 
 export { Button, buttonVariants };

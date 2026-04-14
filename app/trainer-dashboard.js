@@ -77,6 +77,21 @@ function formatSnapshotDate(dateString) {
   });
 }
 
+function getMainChatUrl() {
+  if (typeof window === "undefined") {
+    return "/chat";
+  }
+
+  const host = window.location.hostname;
+  const match = host.match(/^([^.]+)\.agents\.pinata\.cloud$/);
+
+  if (!match) {
+    return "/chat";
+  }
+
+  return `https://agents.pinata.cloud/agents/${match[1]}/chat`;
+}
+
 export default function TrainerDashboard({ authPassword, dashboard, onLogout }) {
   const [page, setPage] = useState(0);
   const [chatAction, setChatAction] = useState("");
@@ -103,6 +118,7 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
 
   async function stageMainChat({ action, input, buttonLabel }) {
     setChatAction(action);
+    const chatUrl = getMainChatUrl();
 
     try {
       const response = await fetch("/app/api/responses", {
@@ -123,10 +139,10 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
         throw new Error("Unable to stage main chat.");
       }
 
-      window.location.href = "/chat";
+      window.location.href = chatUrl;
     } catch (error) {
       console.error(`${buttonLabel} failed`, error);
-      window.location.href = "/chat";
+      window.location.href = chatUrl;
     } finally {
       setChatAction("");
     }
@@ -195,7 +211,10 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
             <Card className="bg-[rgba(12,24,19,0.93)] text-white">
               <CardHeader className="gap-4">
                 <div className="flex items-center justify-between gap-3">
-                  <Badge className="bg-white/12 text-white" variant="outline">
+                  <Badge
+                    className="ui-badge-inverse"
+                    variant="outline"
+                  >
                     Today
                   </Badge>
                   <span className="text-sm text-white/70">{formatSnapshotDate(dashboard.today.date)}</span>
@@ -210,28 +229,39 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
               </CardHeader>
               <CardContent className="grid gap-4">
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <div
+                    className="ui-panel-inverse rounded-3xl border p-4"
+                  >
                     <p className="text-xs uppercase tracking-[0.18em] text-white/60">Streak</p>
                     <p className="mt-2 text-3xl font-semibold">{dashboard.today.streakDays}</p>
                     <p className="mt-1 text-sm text-white/70">days logged</p>
                   </div>
-                  <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <div
+                    className="ui-panel-inverse rounded-3xl border p-4"
+                  >
                     <p className="text-xs uppercase tracking-[0.18em] text-white/60">Workout</p>
                     <p className="mt-2 text-3xl font-semibold">{dashboard.today.workoutTime}</p>
                     <p className="mt-1 text-sm text-white/70">gym block</p>
                   </div>
-                  <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                  <div
+                    className="ui-panel-inverse rounded-3xl border p-4"
+                  >
                     <p className="text-xs uppercase tracking-[0.18em] text-white/60">Protein</p>
                     <p className="mt-2 text-3xl font-semibold">{dashboard.today.proteinGrams}g</p>
                     <p className="mt-1 text-sm text-white/70">target {dashboard.today.proteinTargetGrams}g</p>
                   </div>
                 </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                <div
+                  className="ui-panel-inverse rounded-3xl border p-4"
+                >
                   <div className="flex items-center justify-between gap-3 text-sm text-white/70">
                     <span>Daily readiness</span>
                     <span>{dashboard.today.readinessScore}%</span>
                   </div>
-                  <Progress className="mt-3 bg-white/12" value={dashboard.today.readinessScore} />
+                  <Progress
+                    className="ui-progress-inverse mt-3"
+                    value={dashboard.today.readinessScore}
+                  />
                 </div>
               </CardContent>
             </Card>

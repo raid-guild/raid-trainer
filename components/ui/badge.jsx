@@ -7,10 +7,10 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-transparent bg-[color:var(--secondary)] text-[color:var(--secondary-foreground)]",
-        outline: "border-[color:var(--border)] bg-transparent text-[color:var(--muted-foreground)]",
-        success: "border-transparent bg-[color:var(--success-soft)] text-[color:var(--success-strong)]",
-        warning: "border-transparent bg-[color:var(--warning-soft)] text-[color:var(--warning-strong)]"
+        default: "ui-badge-default border-transparent",
+        outline: "ui-badge-outline",
+        success: "ui-badge-success border-transparent",
+        warning: "ui-badge-warning border-transparent"
       }
     },
     defaultVariants: {
@@ -19,8 +19,14 @@ const badgeVariants = cva(
   }
 );
 
-function Badge({ className, variant, ...props }) {
-  return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
+function Badge({ className, variant, style, ...props }) {
+  return (
+    <div
+      className={cn(badgeVariants({ variant }), className)}
+      style={style}
+      {...props}
+    />
+  );
 }
 
 export { Badge, badgeVariants };
