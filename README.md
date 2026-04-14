@@ -43,6 +43,7 @@ If you add Tailwind classes in new directories later, you must also add those di
 
 - `GET /app/api/dashboard`
 - `GET /app/api/avatar`
+- `POST /app/api/chat-stage`
 - `GET /app/api/status`
 - `POST /app/api/responses`
 - `POST /app/api/auth/login`
@@ -77,6 +78,7 @@ Protected routes:
 - `GET /app`
 - `GET /app/api/dashboard`
 - `GET /app/api/status`
+- `POST /app/api/chat-stage`
 - `POST /app/api/responses`
 - `POST /app/api/admin/rebuild`
 - `GET /app/api/admin/rebuild/status`
@@ -131,25 +133,43 @@ This makes it easier to confirm whether the hosted app actually booted from a fr
 - remove or replace the starter avatar asset if you want a trainer-specific brand
 - add reminder preferences and message delivery later if you connect Telegram, Discord, email, or SMS
 
-## OpenClaw proxy
+## OpenClaw gateway
 
-The app includes a server-side proxy at `POST /app/api/responses` that forwards requests to the protected OpenClaw gateway.
+The app includes two server-side gateway routes:
+
+- `POST /app/api/chat-stage`
+  Stages a message into the live main webchat session over the OpenClaw Gateway WebSocket using `chat.send`.
+- `POST /app/api/responses`
+  Forwards a raw Responses API request to the protected OpenClaw gateway HTTP endpoint.
 
 Expected environment variables:
 
 - `APP_PASSWORD`: dashboard password, defaults to `changeme`
 - `OPENCLAW_GATEWAY_TOKEN`: required bearer token for the gateway
 - `OPENCLAW_GATEWAY_URL`: optional override, defaults to `http://127.0.0.1:18789`
+- `OPENCLAW_GATEWAY_WS_URL`: optional override for the gateway WebSocket URL; if unset, the app derives it from `OPENCLAW_GATEWAY_URL`
 
-Example request:
+Example chat-stage request:
+
+```bash
+curl -X POST http://localhost:3011/app/api/chat-stage \
+  -H "Content-Type: application/json" \
+  -H "x-app-password: changeme" \
+  -d '{"message":"The user opened the Coach Spike dashboard. Start with a concise coaching check-in and ask for today'\''s update."}'
+```
+
+`/app/api/chat-stage` connects to the gateway over WebSocket, completes the gateway handshake, then sends `chat.send` into the live main webchat session key `agent:main:main` so the user lands in the real main chat flow.
+
+Example Responses proxy request:
 
 ```bash
 curl -X POST http://localhost:3011/app/api/responses \
   -H "Content-Type: application/json" \
+  -H "x-app-password: changeme" \
   -d '{"model":"openclaw","input":"Start a new onboarding session for a personal trainer app."}'
 ```
 
-The route forwards the JSON body to `${OPENCLAW_GATEWAY_URL}/v1/responses` and returns the upstream status and body. Keep the token in environment or Pinata secrets, not in source.
+`/app/api/responses` forwards the JSON body to `${OPENCLAW_GATEWAY_URL}/v1/responses` and returns the upstream status and body. Keep the token in environment or Pinata secrets, not in source.
 
 Config checks:
 

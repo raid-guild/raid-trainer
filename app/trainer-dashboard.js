@@ -121,17 +121,14 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
     const chatUrl = getMainChatUrl();
 
     try {
-      const response = await fetch("/app/api/responses", {
+      const response = await fetch("/app/api/chat-stage", {
         method: "POST",
         headers: {
           "content-type": "application/json",
-          "x-app-password": authPassword,
-          "x-openclaw-agent-id": "main",
-          "x-openclaw-session-key": "main"
+          "x-app-password": authPassword
         },
         body: JSON.stringify({
-          model: "openclaw",
-          input
+          message: input
         })
       });
 

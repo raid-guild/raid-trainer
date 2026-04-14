@@ -12,9 +12,9 @@ const buttonVariants = cva(
         ghost: "ui-btn-ghost"
       },
       size: {
-        default: "h-11 px-5",
-        sm: "h-9 px-4 text-xs",
-        lg: "h-12 px-6"
+        default: "ui-btn-size-default",
+        sm: "ui-btn-size-sm",
+        lg: "ui-btn-size-lg"
       }
     },
     defaultVariants: {
