@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const badgeVariants = cva(
-  "ui-badge-base inline-flex items-center rounded-full border font-semibold uppercase tracking-[0.18em]",
+  "ui-badge-base",
   {
     variants: {
       variant: {

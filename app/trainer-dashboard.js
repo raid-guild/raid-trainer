@@ -60,9 +60,9 @@ function ActivityDot({ tone }) {
   return (
     <span
       className={cn("h-2.5 w-2.5 rounded-full", {
-        "bg-[color:var(--success)]": tone === "success",
-        "bg-[color:var(--warning)]": tone === "warning",
-        "bg-[color:var(--muted)]": tone === "outline"
+        "ui-dot-success": tone === "success",
+        "ui-dot-warning": tone === "warning",
+        "ui-dot-muted": tone === "outline"
       })}
     />
   );
@@ -146,10 +146,10 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
   }
 
   return (
-    <main className="min-h-screen bg-[color:var(--background)]">
+    <main className="ui-app-bg min-h-screen">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-        <section className="overflow-hidden rounded-[32px] border border-[color:var(--border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(232,242,238,0.96))] shadow-[0_24px_80px_rgba(15,23,42,0.1)]">
-          <div className="grid gap-6 p-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.85fr)] lg:p-8">
+        <section className="ui-hero-shell">
+          <div className="ui-layout-hero-grid grid gap-6 p-6 lg:p-8">
             <div className="space-y-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <Badge className="w-fit" variant="default">
@@ -162,10 +162,10 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                 ) : null}
               </div>
               <div className="space-y-4">
-                <h1 className="max-w-3xl font-[family-name:var(--font-display)] text-4xl font-semibold tracking-[-0.05em] text-[color:var(--foreground)] sm:text-5xl lg:text-6xl">
+                <h1 className="ui-display-title max-w-3xl text-4xl font-semibold sm:text-5xl lg:text-6xl">
                   Main chat runs the coaching. The dashboard shows whether you are actually doing the work.
                 </h1>
-                <p className="max-w-2xl text-base leading-7 text-[color:var(--muted-foreground)] sm:text-lg">
+                <p className="ui-text-muted max-w-2xl text-base leading-7 sm:text-lg">
                   Use the main chat for onboarding, daily updates, and plan changes. This view stays lightweight:
                   profile snapshot, current plan, trend visuals, and a weekly activity log instead of a heavy calendar.
                 </p>
@@ -205,7 +205,7 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
               </div>
             </div>
 
-            <Card className="bg-[rgba(12,24,19,0.93)] text-white">
+            <Card className="ui-card-dark">
               <CardHeader className="gap-4">
                 <div className="flex items-center justify-between gap-3">
                   <Badge
@@ -227,29 +227,29 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
               <CardContent className="grid gap-4">
                 <div className="grid grid-cols-3 gap-3">
                   <div
-                    className="ui-panel-inverse rounded-3xl border p-4"
+                    className="ui-panel-inverse ui-stat-tile border"
                   >
-                    <p className="text-xs uppercase tracking-[0.18em] text-white/60">Streak</p>
+                    <p className="ui-badge-label text-xs uppercase text-white/60">Streak</p>
                     <p className="mt-2 text-3xl font-semibold">{dashboard.today.streakDays}</p>
                     <p className="mt-1 text-sm text-white/70">days logged</p>
                   </div>
                   <div
-                    className="ui-panel-inverse rounded-3xl border p-4"
+                    className="ui-panel-inverse ui-stat-tile border"
                   >
-                    <p className="text-xs uppercase tracking-[0.18em] text-white/60">Workout</p>
+                    <p className="ui-badge-label text-xs uppercase text-white/60">Workout</p>
                     <p className="mt-2 text-3xl font-semibold">{dashboard.today.workoutTime}</p>
                     <p className="mt-1 text-sm text-white/70">gym block</p>
                   </div>
                   <div
-                    className="ui-panel-inverse rounded-3xl border p-4"
+                    className="ui-panel-inverse ui-stat-tile border"
                   >
-                    <p className="text-xs uppercase tracking-[0.18em] text-white/60">Protein</p>
+                    <p className="ui-badge-label text-xs uppercase text-white/60">Protein</p>
                     <p className="mt-2 text-3xl font-semibold">{dashboard.today.proteinGrams}g</p>
                     <p className="mt-1 text-sm text-white/70">target {dashboard.today.proteinTargetGrams}g</p>
                   </div>
                 </div>
                 <div
-                  className="ui-panel-inverse rounded-3xl border p-4"
+                  className="ui-panel-inverse ui-stat-tile border"
                 >
                   <div className="flex items-center justify-between gap-3 text-sm text-white/70">
                     <span>Daily readiness</span>
@@ -265,7 +265,7 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
           </div>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(22rem,0.9fr)]">
+        <section className="ui-layout-main-grid grid gap-6">
           <div className="grid gap-6">
             <Card>
               <CardHeader>
@@ -283,11 +283,11 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                 {planBlocks.map(({ title, detail, icon: Icon }) => (
                   <div
                     key={title}
-                    className="rounded-[24px] border border-[color:var(--border)] bg-[color:var(--panel)] p-5"
+                    className="ui-surface-panel ui-plan-tile"
                   >
-                    <Icon className="h-5 w-5 text-[color:var(--primary)]" />
-                    <h3 className="mt-4 font-semibold text-[color:var(--foreground)]">{title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-[color:var(--muted-foreground)]">{detail}</p>
+                    <Icon className="ui-text-primary h-5 w-5" />
+                    <h3 className="ui-text-body mt-4 font-semibold">{title}</h3>
+                    <p className="ui-text-muted mt-2 text-sm leading-6">{detail}</p>
                   </div>
                 ))}
               </CardContent>
@@ -325,12 +325,12 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                 </div>
               </CardHeader>
               <CardContent className="space-y-5">
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-[24px] bg-[color:var(--panel)] p-4">
+                <div className="ui-surface-panel ui-summary-strip flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <p className="font-semibold text-[color:var(--foreground)]">{week.label}</p>
-                    <p className="mt-1 text-sm leading-6 text-[color:var(--muted-foreground)]">{week.summary}</p>
+                    <p className="ui-text-body font-semibold">{week.label}</p>
+                    <p className="ui-text-muted mt-1 text-sm leading-6">{week.summary}</p>
                   </div>
-                  <div className="flex flex-wrap gap-3 text-sm text-[color:var(--muted-foreground)]">
+                  <div className="ui-text-muted flex flex-wrap gap-3 text-sm">
                     <span className="inline-flex items-center gap-2"><ActivityDot tone="success" /> complete</span>
                     <span className="inline-flex items-center gap-2"><ActivityDot tone="warning" /> partial</span>
                     <span className="inline-flex items-center gap-2"><ActivityDot tone="outline" /> planned or at-risk</span>
@@ -341,14 +341,14 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                   {week.entries.map((entry) => (
                     <article
                       key={`${week.label}-${entry.date}`}
-                      className="grid gap-4 rounded-[24px] border border-[color:var(--border)] bg-white/80 p-4 md:grid-cols-[7rem_minmax(0,1fr)_auto]"
+                      className="ui-surface-panel-soft ui-activity-row grid gap-4"
                     >
                       <div>
-                        <p className="text-sm font-semibold text-[color:var(--foreground)]">{entry.date}</p>
-                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[color:var(--muted)]">session</p>
+                        <p className="ui-text-body text-sm font-semibold">{entry.date}</p>
+                        <p className="ui-badge-label ui-text-soft mt-1 text-xs uppercase">session</p>
                       </div>
                       <div>
-                        <p className="font-medium text-[color:var(--foreground)]">{entry.workout}</p>
+                        <p className="ui-text-body font-medium">{entry.workout}</p>
                         <div className="mt-3 flex flex-wrap gap-2">
                           <Badge variant={getStatusTone("completion", entry.completion)}>{entry.completion}</Badge>
                           <Badge variant={getStatusTone("nutrition", entry.nutrition)}>{entry.nutrition}</Badge>
@@ -356,15 +356,15 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                         </div>
                       </div>
                       <div className="flex items-start justify-start gap-3 md:justify-end">
-                        <div className="flex items-center gap-2 text-sm text-[color:var(--muted-foreground)]">
+                        <div className="ui-text-muted flex items-center gap-2 text-sm">
                           <ActivityDot tone={getStatusTone("completion", entry.completion)} />
                           workout
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-[color:var(--muted-foreground)]">
+                        <div className="ui-text-muted flex items-center gap-2 text-sm">
                           <ActivityDot tone={getStatusTone("nutrition", entry.nutrition)} />
                           food
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-[color:var(--muted-foreground)]">
+                        <div className="ui-text-muted flex items-center gap-2 text-sm">
                           <ActivityDot tone={getStatusTone("streak", entry.streak)} />
                           streak
                         </div>
@@ -386,7 +386,7 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                 {profilePills.map((pill) => (
                   <div
                     key={pill}
-                    className="rounded-[20px] border border-[color:var(--border)] bg-[color:var(--panel)] px-4 py-3 text-sm text-[color:var(--foreground)]"
+                    className="ui-surface-panel ui-pill-row ui-text-body text-sm"
                   >
                     {pill}
                   </div>
@@ -422,7 +422,7 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                 {reminderPills.map((pill) => (
                   <div
                     key={pill}
-                    className="rounded-[20px] border border-[color:var(--border)] bg-[color:var(--panel)] px-4 py-3 text-sm text-[color:var(--foreground)]"
+                    className="ui-surface-panel ui-pill-row ui-text-body text-sm"
                   >
                     {pill}
                   </div>
@@ -457,18 +457,18 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                   {dashboard.nutritionTrend.map((point) => (
                     <div key={point.day} className="space-y-3 text-center">
                       <div className="flex h-40 items-end justify-center gap-2">
-                        <div className="w-3 rounded-full bg-[color:var(--secondary)]" style={{ height: `${point.calories}%` }} />
-                        <div className="w-3 rounded-full bg-[color:var(--primary)]" style={{ height: `${point.protein}%` }} />
+                        <div className="ui-bar-secondary w-3 rounded-full" style={{ height: `${point.calories}%` }} />
+                        <div className="ui-bar-primary w-3 rounded-full" style={{ height: `${point.protein}%` }} />
                       </div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[color:var(--muted)]">
+                      <p className="ui-badge-label ui-text-soft text-xs font-semibold uppercase">
                         {point.day}
                       </p>
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-wrap gap-4 text-sm text-[color:var(--muted-foreground)]">
-                  <span className="inline-flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-[color:var(--primary)]" /> protein target</span>
-                  <span className="inline-flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-[color:var(--secondary)]" /> calorie target</span>
+                <div className="ui-text-muted flex flex-wrap gap-4 text-sm">
+                  <span className="inline-flex items-center gap-2"><span className="ui-bar-primary h-3 w-3 rounded-full" /> protein target</span>
+                  <span className="inline-flex items-center gap-2"><span className="ui-bar-secondary h-3 w-3 rounded-full" /> calorie target</span>
                 </div>
               </CardContent>
             </Card>
@@ -485,12 +485,12 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                   return (
                   <div
                     key={item.text}
-                    className="flex gap-3 rounded-[20px] border border-[color:var(--border)] bg-[color:var(--panel)] p-4"
+                    className="ui-surface-panel ui-note-tile flex gap-3"
                   >
-                    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--secondary)] text-[color:var(--secondary-foreground)]">
+                    <div className="ui-bar-secondary ui-text-secondary mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
                       <Icon className="h-4 w-4" />
                     </div>
-                    <p className="text-sm leading-6 text-[color:var(--foreground)]">{item.text}</p>
+                    <p className="ui-text-body text-sm leading-6">{item.text}</p>
                   </div>
                   );
                 })}
@@ -509,10 +509,10 @@ export default function TrainerDashboard({ authPassword, dashboard, onLogout }) 
                   { label: "Plan tuning", detail: "Use the main chat when you want Coach Spike to adapt volume, substitutions, or deload timing.", icon: Activity },
                   { label: "Dashboard role", detail: "Visual scan only: progress, trends, state summaries, and prompts that send you back to the main chat.", icon: Flame }
                 ].map(({ label, detail, icon: Icon }) => (
-                  <div key={label} className="rounded-[22px] bg-[color:var(--panel)] p-4">
-                    <Icon className="h-5 w-5 text-[color:var(--primary)]" />
-                    <p className="mt-3 font-medium text-[color:var(--foreground)]">{label}</p>
-                    <p className="mt-1 text-sm leading-6 text-[color:var(--muted-foreground)]">{detail}</p>
+                  <div key={label} className="ui-surface-panel ui-workflow-tile">
+                    <Icon className="ui-text-primary h-5 w-5" />
+                    <p className="ui-text-body mt-3 font-medium">{label}</p>
+                    <p className="ui-text-muted mt-1 text-sm leading-6">{detail}</p>
                   </div>
                 ))}
               </CardContent>

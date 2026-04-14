@@ -4,7 +4,7 @@ function Card({ className, ...props }) {
   return (
     <section
       className={cn(
-        "rounded-[28px] border border-[color:var(--border)] bg-[color:var(--card)] shadow-[0_18px_60px_rgba(15,23,42,0.08)]",
+        "ui-card-base",
         className
       )}
       {...props}
@@ -20,7 +20,7 @@ function CardTitle({ className, ...props }) {
   return (
     <h2
       className={cn(
-        "font-[family-name:var(--font-display)] text-xl font-semibold tracking-[-0.03em] text-[color:var(--foreground)]",
+        "ui-card-title text-xl font-semibold",
         className
       )}
       {...props}
@@ -29,7 +29,7 @@ function CardTitle({ className, ...props }) {
 }
 
 function CardDescription({ className, ...props }) {
-  return <p className={cn("text-sm leading-6 text-[color:var(--muted-foreground)]", className)} {...props} />;
+  return <p className={cn("ui-text-muted text-sm leading-6", className)} {...props} />;
 }
 
 function CardContent({ className, ...props }) {

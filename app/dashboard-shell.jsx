@@ -10,7 +10,7 @@ const PASSWORD_STORAGE_KEY = "coach-spike-password";
 function LoadingState() {
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-8 sm:px-6">
-      <div className="text-sm text-[color:var(--muted-foreground)]">Loading dashboard...</div>
+      <div className="ui-text-muted text-sm">Loading dashboard...</div>
     </main>
   );
 }
