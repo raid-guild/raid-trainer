@@ -68,6 +68,12 @@ Protected routes:
 
 This is intentionally lightweight starter auth, not a full user system. Change the default password in any real deployment.
 
+For manual admin calls, protected API routes also accept the direct header:
+
+- `x-app-password: <APP_PASSWORD>`
+
+This is useful for rebuild and status checks when cookie-based auth is unreliable through the hosted proxy.
+
 ## Rebuild hook
 
 Pinata does not automatically rebuild the Next app just because files changed in the workspace. PM2 will restart processes, but it will not regenerate the Next production build for you.
@@ -85,6 +91,13 @@ What it does:
 - writes logs to `workspace/data/rebuild.log`
 
 This is better than a cron for normal app edits because rebuilds happen on demand rather than on a fixed schedule. If you still want automation, a Pinata Task can call this route or prompt the agent to trigger it after code changes.
+
+Startup behavior:
+
+- `npm start` now runs a fresh `next build` before launching PM2
+- `/app/health` includes the current Next `BUILD_ID`
+
+This makes it easier to confirm whether the hosted app actually booted from a fresh production build.
 
 ## Next implementation steps
 

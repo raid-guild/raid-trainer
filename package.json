@@ -9,6 +9,7 @@
     "app:rebuild": "node scripts/rebuild-app.mjs",
     "trainer:onboarding": "node scripts/save-onboarding.mjs",
     "trainer:checkin": "node scripts/log-checkin.mjs",
+    "prestart": "npm run build",
     "start": "pm2-runtime start ecosystem.config.cjs",
     "start:web": "node server.js",
     "start:daemon": "pm2 start ecosystem.config.cjs",
