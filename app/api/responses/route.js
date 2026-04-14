@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import { AUTH_COOKIE_NAME, isAuthenticatedValue } from "../../../lib/auth";
+import { AUTH_COOKIE_NAME, isAuthorizedRequest } from "../../../lib/auth";
 import { getOpenClawConfig } from "../../../lib/openclaw";
 
 export const dynamic = "force-dynamic";
@@ -10,7 +10,7 @@ export async function POST(request) {
   const cookieStore = await cookies();
   const authCookie = cookieStore.get(AUTH_COOKIE_NAME)?.value;
 
-  if (!isAuthenticatedValue(authCookie)) {
+  if (!isAuthorizedRequest(request, authCookie)) {
     return Response.json({ error: "Unauthorized." }, { status: 401 });
   }
 

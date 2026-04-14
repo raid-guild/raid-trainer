@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@source "../app";
-@source "../components";
-@source "../lib";
+@import "tailwindcss" source(none);
+@source "../app/**/*.{js,jsx,ts,tsx,mdx}";
+@source "../components/**/*.{js,jsx,ts,tsx,mdx}";
+@source "../lib/**/*.{js,jsx,ts,tsx,mdx}";
 
 :root {
   color-scheme: light;

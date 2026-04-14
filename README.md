@@ -25,6 +25,20 @@ The product split is intentional:
 - `ecosystem.config.cjs` tells PM2 how to run the app
 - `workspace/` holds the editable coaching identity and behavior docs
 
+## Tailwind note
+
+This template uses Tailwind v4 with explicit `@source` directives in `app/globals.css`.
+
+That is intentional. On Pinata-hosted template deploys, the platform can inject a restrictive `.gitignore` that interferes with Tailwind's automatic source detection. To avoid missing production CSS, this repo uses:
+
+```css
+@import "tailwindcss" source(none);
+```
+
+and then explicitly lists the folders Tailwind should scan.
+
+If you add Tailwind classes in new directories later, you must also add those directories to the `@source` list in `app/globals.css`, for example `src/`, `features/`, or any MDX content folders.
+
 ## Current routes
 
 - `GET /app/api/dashboard`
