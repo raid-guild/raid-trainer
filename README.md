@@ -35,6 +35,7 @@ The product split is intentional:
 - `POST /app/api/auth/logout`
 - `POST /app/api/admin/rebuild`
 - `GET /app/api/admin/rebuild/status`
+- `GET /app/api/admin/rebuild/log`
 
 ## Current data model
 
@@ -82,6 +83,7 @@ The app now includes an authenticated rebuild hook:
 
 - `POST /app/api/admin/rebuild`
 - `GET /app/api/admin/rebuild/status`
+- `GET /app/api/admin/rebuild/log`
 
 What it does:
 
@@ -91,6 +93,11 @@ What it does:
 - writes logs to `workspace/data/rebuild.log`
 
 This is better than a cron for normal app edits because rebuilds happen on demand rather than on a fixed schedule. If you still want automation, a Pinata Task can call this route or prompt the agent to trigger it after code changes.
+
+Rebuild debugging:
+
+- rebuild status writes are now atomic to avoid partial JSON reads
+- `GET /app/api/admin/rebuild/log` returns the current rebuild log
 
 Startup behavior:
 

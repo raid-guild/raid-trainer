@@ -1,17 +1,18 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { createWriteStream, mkdirSync, renameSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { spawn } from "node:child_process";
 
 const workspaceDir = process.cwd();
 const dataDir = path.join(workspaceDir, "workspace", "data");
 const statusPath = path.join(dataDir, "rebuild-status.json");
+const tempStatusPath = path.join(dataDir, "rebuild-status.json.tmp");
 const logPath = path.join(dataDir, "rebuild.log");
 
 mkdirSync(dataDir, { recursive: true });
 
 function writeStatus(status) {
   writeFileSync(
-    statusPath,
+    tempStatusPath,
     JSON.stringify(
       {
         updatedAt: new Date().toISOString(),
@@ -21,6 +22,7 @@ function writeStatus(status) {
       2
     )
   );
+  renameSync(tempStatusPath, statusPath);
 }
 
 writeStatus({
@@ -35,18 +37,18 @@ const child = spawn("bash", ["-lc", command], {
   stdio: ["ignore", "pipe", "pipe"]
 });
 
-let output = "";
+const logStream = createWriteStream(logPath, { flags: "w" });
 
 child.stdout.on("data", (chunk) => {
-  output += chunk.toString();
+  logStream.write(chunk);
 });
 
 child.stderr.on("data", (chunk) => {
-  output += chunk.toString();
+  logStream.write(chunk);
 });
 
 child.on("close", (code) => {
-  writeFileSync(logPath, output, "utf8");
+  logStream.end();
 
   writeStatus({
     ok: code === 0,
@@ -58,7 +60,8 @@ child.on("close", (code) => {
 });
 
 child.on("error", (error) => {
-  writeFileSync(logPath, String(error), "utf8");
+  logStream.write(String(error));
+  logStream.end();
 
   writeStatus({
     ok: false,

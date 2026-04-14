@@ -31,11 +31,10 @@ export default function LoginForm() {
       return;
     }
 
-    const next = searchParams.get("next") || "/app";
+    const next = searchParams.get("next") || "/";
 
     startTransition(() => {
-      router.replace(next);
-      router.refresh();
+      window.location.href = next;
     });
   }
 
