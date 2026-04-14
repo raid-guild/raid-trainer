@@ -31,43 +31,93 @@ writeStatus({
   message: "Rebuild started."
 });
 
-const command = "npm run build && npx pm2 reload ecosystem.config.cjs --update-env";
-const child = spawn("bash", ["-lc", command], {
-  cwd: workspaceDir,
-  stdio: ["ignore", "pipe", "pipe"]
-});
-
 const logStream = createWriteStream(logPath, { flags: "w" });
 
-child.stdout.on("data", (chunk) => {
-  logStream.write(chunk);
-});
+function runCommand(label, command, { timeoutMs } = {}) {
+  return new Promise((resolve, reject) => {
+    logStream.write(`=== ${label} ===\n`);
 
-child.stderr.on("data", (chunk) => {
-  logStream.write(chunk);
-});
+    const child = spawn("bash", ["-lc", command], {
+      cwd: workspaceDir,
+      stdio: ["ignore", "pipe", "pipe"]
+    });
 
-child.on("close", (code) => {
-  logStream.end();
+    let timeoutId = null;
 
-  writeStatus({
-    ok: code === 0,
-    state: code === 0 ? "succeeded" : "failed",
-    message: code === 0 ? "Rebuild completed." : "Rebuild failed.",
-    exitCode: code,
-    logPath
+    if (timeoutMs) {
+      timeoutId = setTimeout(() => {
+        child.kill("SIGTERM");
+        reject(new Error(`${label} timed out after ${timeoutMs}ms`));
+      }, timeoutMs);
+    }
+
+    child.stdout.on("data", (chunk) => {
+      logStream.write(chunk);
+    });
+
+    child.stderr.on("data", (chunk) => {
+      logStream.write(chunk);
+    });
+
+    child.on("error", (error) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      reject(error);
+    });
+
+    child.on("close", (code) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      reject(new Error(`${label} exited with code ${code}`));
+    });
   });
-});
+}
 
-child.on("error", (error) => {
-  logStream.write(String(error));
-  logStream.end();
+async function main() {
+  try {
+    await runCommand("next build", "npm run build", { timeoutMs: 10 * 60 * 1000 });
 
-  writeStatus({
-    ok: false,
-    state: "failed",
-    message: "Rebuild process failed to start.",
-    error: String(error),
-    logPath
-  });
-});
+    writeStatus({
+      ok: true,
+      state: "restarting",
+      message: "Build completed. Requesting PM2 restart."
+    });
+
+    await runCommand(
+      "pm2 restart",
+      "npx pm2 restart full-stack-agent-starter --update-env",
+      { timeoutMs: 30 * 1000 }
+    );
+
+    writeStatus({
+      ok: true,
+      state: "succeeded",
+      message: "Rebuild completed and PM2 restart requested.",
+      logPath
+    });
+    logStream.end();
+  } catch (error) {
+    logStream.write(`\nERROR: ${String(error.message || error)}\n`);
+    logStream.end();
+
+    writeStatus({
+      ok: false,
+      state: "failed",
+      message: "Rebuild failed.",
+      error: String(error.message || error),
+      logPath
+    });
+    process.exit(1);
+  }
+}
+
+main();

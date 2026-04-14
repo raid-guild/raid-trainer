@@ -1,40 +1,27 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
 
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
-export default function LoginForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export default function LoginForm({ error: externalError = "", onAuthenticated }) {
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(externalError);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setError(externalError);
+  }, [externalError]);
 
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
 
-    const response = await fetch("/app/api/auth/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({ password })
-    });
-
-    if (!response.ok) {
-      const data = await response.json().catch(() => ({ error: "Login failed." }));
-      setError(data.error || "Login failed.");
-      return;
-    }
-
-    const next = searchParams.get("next") || "/";
-
     startTransition(() => {
-      window.location.href = next;
+      Promise.resolve(onAuthenticated?.(password)).catch(() => {
+        setError("Login failed.");
+      });
     });
   }
 
@@ -44,7 +31,7 @@ export default function LoginForm() {
         <CardHeader>
           <CardTitle>Enter dashboard password</CardTitle>
           <CardDescription>
-            Lightweight starter auth for the Coach Spike dashboard. Change the default password in `APP_PASSWORD`.
+            Enter the app password to load the dashboard. The hosted app validates requests with the `x-app-password` header instead of relying on cookie auth.
           </CardDescription>
         </CardHeader>
         <CardContent>

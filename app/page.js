@@ -1,19 +1,7 @@
-import TrainerDashboard from "./trainer-dashboard";
-import { cookies } from "next/headers";
-
-import LoginForm from "../components/login-form";
-import { AUTH_COOKIE_NAME, isAuthenticatedValue } from "../lib/auth";
-import { getDashboardData } from "../lib/trainer";
+import DashboardShell from "./dashboard-shell";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  const cookieStore = await cookies();
-  const authCookie = cookieStore.get(AUTH_COOKIE_NAME)?.value;
-
-  if (!isAuthenticatedValue(authCookie)) {
-    return <LoginForm />;
-  }
-
-  return <TrainerDashboard dashboard={getDashboardData()} />;
+export default function HomePage() {
+  return <DashboardShell />;
 }

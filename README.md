@@ -55,7 +55,7 @@ The database seeds a starter state on first run so the dashboard renders immedia
 The dashboard now uses simple password auth backed by an environment variable.
 
 - `APP_PASSWORD`: optional, defaults to `changeme`
-- unauthenticated requests to `/app` render the inline login form
+- `/app` always renders a client shell, and the dashboard unlocks after a successful password check
 - unauthenticated requests to protected API routes return `401`
 
 Protected routes:
@@ -75,6 +75,8 @@ For manual admin calls, protected API routes also accept the direct header:
 
 This is useful for rebuild and status checks when cookie-based auth is unreliable through the hosted proxy.
 
+The dashboard itself now uses `x-app-password` for client-side API requests, which avoids relying on hosted cookie behavior.
+
 ## Rebuild hook
 
 Pinata does not automatically rebuild the Next app just because files changed in the workspace. PM2 will restart processes, but it will not regenerate the Next production build for you.
@@ -88,7 +90,7 @@ The app now includes an authenticated rebuild hook:
 What it does:
 
 - runs `npm run build`
-- then runs `pm2 reload ecosystem.config.cjs --update-env`
+- then runs `npx pm2 restart full-stack-agent-starter --update-env`
 - writes status to `workspace/data/rebuild-status.json`
 - writes logs to `workspace/data/rebuild.log`
 
@@ -98,6 +100,7 @@ Rebuild debugging:
 
 - rebuild status writes are now atomic to avoid partial JSON reads
 - `GET /app/api/admin/rebuild/log` returns the current rebuild log
+- rebuild success is reported after the build completes and the PM2 restart request succeeds
 
 Startup behavior:
 

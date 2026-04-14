@@ -77,7 +77,7 @@ function formatSnapshotDate(dateString) {
   });
 }
 
-export default function TrainerDashboard({ dashboard }) {
+export default function TrainerDashboard({ authPassword, dashboard, onLogout }) {
   const [page, setPage] = useState(0);
   const [chatAction, setChatAction] = useState("");
   const weekPages = dashboard.weeklySummaries;
@@ -109,6 +109,7 @@ export default function TrainerDashboard({ dashboard }) {
         method: "POST",
         headers: {
           "content-type": "application/json",
+          "x-app-password": authPassword,
           "x-openclaw-agent-id": "main",
           "x-openclaw-session-key": "main"
         },
@@ -137,9 +138,16 @@ export default function TrainerDashboard({ dashboard }) {
         <section className="overflow-hidden rounded-[32px] border border-[color:var(--border)] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(232,242,238,0.96))] shadow-[0_24px_80px_rgba(15,23,42,0.1)]">
           <div className="grid gap-6 p-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.85fr)] lg:p-8">
             <div className="space-y-5">
-              <Badge className="w-fit" variant="default">
-                {dashboard.profile.coachName} Dashboard
-              </Badge>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <Badge className="w-fit" variant="default">
+                  {dashboard.profile.coachName} Dashboard
+                </Badge>
+                {onLogout ? (
+                  <Button variant="ghost" size="sm" onClick={onLogout}>
+                    Log Out
+                  </Button>
+                ) : null}
+              </div>
               <div className="space-y-4">
                 <h1 className="max-w-3xl font-[family-name:var(--font-display)] text-4xl font-semibold tracking-[-0.05em] text-[color:var(--foreground)] sm:text-5xl lg:text-6xl">
                   Main chat runs the coaching. The dashboard shows whether you are actually doing the work.
