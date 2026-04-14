@@ -27,7 +27,6 @@ The product split is intentional:
 
 ## Current routes
 
-- `GET /app/login`
 - `GET /app/api/dashboard`
 - `GET /app/api/avatar`
 - `GET /app/api/status`
@@ -55,7 +54,7 @@ The database seeds a starter state on first run so the dashboard renders immedia
 The dashboard now uses simple password auth backed by an environment variable.
 
 - `APP_PASSWORD`: optional, defaults to `changeme`
-- unauthenticated requests to `/app` redirect to `/app/login`
+- unauthenticated requests to `/app` render the inline login form
 - unauthenticated requests to protected API routes return `401`
 
 Protected routes:

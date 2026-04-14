@@ -1,7 +1,7 @@
 import TrainerDashboard from "./trainer-dashboard";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
+import LoginForm from "../components/login-form";
 import { AUTH_COOKIE_NAME, isAuthenticatedValue } from "../lib/auth";
 import { getDashboardData } from "../lib/trainer";
 
@@ -12,7 +12,7 @@ export default async function HomePage() {
   const authCookie = cookieStore.get(AUTH_COOKIE_NAME)?.value;
 
   if (!isAuthenticatedValue(authCookie)) {
-    redirect("/login");
+    return <LoginForm />;
   }
 
   return <TrainerDashboard dashboard={getDashboardData()} />;
